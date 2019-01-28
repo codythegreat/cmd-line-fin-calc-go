@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	// extract all values from CLI arguments
 	rate, err := strconv.ParseFloat(os.Args[1], 64)
 	if err != nil {
 		panic(err)
@@ -30,13 +31,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	// if last value (pmtType) = zero, run calculations from year begining
 	if pmtType == 0 {
 		res, err := fin.FutureValue(rate, int(periods), pmt, pv, fin.PayBegin)
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("Rate: %v, Periods: %v, PMT: %v, PV: %v\nResult: %d\n", rate, periods, pmt, pv, int(res))
-	} else if pmtType == 1 {
+	} else if pmtType == 1 { // else we run the calulations from year end
 		res, err := fin.FutureValue(rate, int(periods), pmt, pv, fin.PayEnd)
 		if err != nil {
 			panic(err)
