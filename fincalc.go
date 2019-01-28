@@ -14,7 +14,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	periods, err := strconv.Atoi(os.Args[2])
+	periods, err := strconv.ParseInt(os.Args[2], 10, 64)
 	if err != nil {
 		panic(err)
 	}
@@ -26,21 +26,21 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	pmtType, err := strconv.ParseInt(os.Args[5], 10, 8)
+	pmtType, err := strconv.ParseInt(os.Args[5], 10, 64)
 	if err != nil {
 		panic(err)
 	}
 	if pmtType == 0 {
-		res, err := fin.FutureValue(rate, periods, pmt, pv, fin.PayBegin)
+		res, err := fin.FutureValue(rate, int(periods), pmt, pv, fin.PayBegin)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Rate: %v, Periods: %v, PMT: %v, PV: %v\nResult: %v\n", rate, periods, pmt, pv, res)
+		fmt.Printf("Rate: %v, Periods: %v, PMT: %v, PV: %v\nResult: %d\n", rate, periods, pmt, pv, int(res))
 	} else if pmtType == 1 {
-		res, err := fin.FutureValue(rate, periods, pmt, pv, fin.PayEnd)
+		res, err := fin.FutureValue(rate, int(periods), pmt, pv, fin.PayEnd)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Rate: %v, Periods: %v, PMT: %v, PV: %v\nResult: %v\n", rate, periods, pmt, pv, res)
+		fmt.Printf("Rate: %v, Periods: %v, PMT: %v, PV: %v\nResult: %d\n", rate, periods, pmt, pv, int(res))
 	}
 }
